@@ -5,7 +5,8 @@ Gracias por tu tiempo. Esta prueba se parece al trabajo real del puesto: no vas 
 | | |
 |---|---|
 | Esfuerzo esperado | 3 a 4 horas de trabajo efectivo |
-| Plazo de entrega | 48 horas desde que recibes este repositorio |
+| Plazo de entrega | 48 horas desde que recibes la invitación |
+| Forma de entrega | Pull request desde tu fork hacia este repositorio |
 | Siguiente etapa | Defensa presencial de tu entrega (45 a 60 minutos) |
 
 No esperamos que todo quede perfecto. Si el tiempo no te alcanza, prioriza y explica en `DECISIONES.md` qué dejaste fuera y por qué. Un alcance menor bien resuelto vale más que todo a medias.
@@ -152,14 +153,23 @@ Solo si te sobra tiempo. Suman, pero no compensan una tarea obligatoria floja. E
 - En Android puedes usar las librerías que quieras (Retrofit, OkHttp, Hilt, Moshi, etc.). Cuéntanos por qué las elegiste.
 - Puedes usar asistentes de IA. Decláralo en `DECISIONES.md`. En la defensa vas a explicar tu código y a modificarlo en vivo, así que entrega solo lo que entiendas.
 - Haz commits pequeños con mensajes claros. Nos interesa ver cómo avanzaste, no un único commit final.
-- No publiques este enunciado ni tu solución en repositorios públicos.
+- Trabaja por tu cuenta. Las entregas de otras personas son visibles en este repositorio; no las uses como base.
 - Si algo no está claro, pregunta respondiendo al correo con el que recibiste la prueba. Preguntar no resta puntos. Si no llegas a preguntar, toma una decisión razonable y anótala.
 
 ## Entrega
 
-Envía el enlace a un repositorio privado con acceso para quien te envió la prueba, o un archivo zip que incluya la carpeta `.git`.
+La entrega es un pull request desde tu fork hacia este repositorio.
 
-Antes de enviar, comprueba que:
+1. Haz un fork de este repositorio en tu cuenta de GitHub.
+2. Trabaja en una rama de tu fork (por ejemplo `solucion`).
+3. Cuando termines, abre un pull request desde esa rama hacia la rama `main` de este repositorio, con el título `Entrega: Nombre Apellido`.
+4. En la descripción del pull request escribe un resumen de dos o tres líneas. El detalle va en `DECISIONES.md`.
+
+La hora en que abres el pull request es tu hora de entrega. Los commits que agregues después del plazo no se evalúan. No vamos a hacer merge: el pull request solo sirve para revisar tu trabajo.
+
+Este repositorio es público, así que tu fork y tu pull request también lo serán.
+
+Antes de abrir el pull request, comprueba que:
 
 1. `docker compose down -v && docker compose up --build` deja la API funcionando.
 2. La app compila y los tests pasan con `./gradlew testDebugUnitTest` dentro de `android/`.
