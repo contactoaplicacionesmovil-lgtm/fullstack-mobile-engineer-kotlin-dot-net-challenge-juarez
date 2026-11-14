@@ -1,0 +1,34 @@
+# Llamadas de ejemplo a la API. Funciona con la extension "REST Client" de
+# VS Code y con el cliente HTTP de Rider, Visual Studio e IntelliJ.
+
+@baseUrl = http://localhost:5080
+
+### Login
+# @name login
+POST {{baseUrl}}/api/auth/login
+Content-Type: application/json
+
+{
+  "username": "jperez",
+  "password": "123456"
+}
+
+###
+@token = {{login.response.body.token}}
+
+### Ordenes del tecnico 1
+GET {{baseUrl}}/api/workorders?technicianId=1
+Authorization: Bearer {{token}}
+
+### Ordenes pendientes del tecnico 1
+GET {{baseUrl}}/api/workorders?technicianId=1&status=PENDING
+Authorization: Bearer {{token}}
+
+### Cambiar el estado de la orden 4
+PUT {{baseUrl}}/api/workorders/4/status
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "status": "IN_PROGRESS"
+}

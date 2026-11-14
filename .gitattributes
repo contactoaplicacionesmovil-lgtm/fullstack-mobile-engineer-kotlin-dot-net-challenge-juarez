@@ -1,0 +1,6 @@
+# Los scripts que se ejecutan dentro de contenedores Linux deben conservar
+# saltos de linea LF aunque el repositorio se clone en Windows.
+*.sh     text eol=lf
+gradlew  text eol=lf
+*.bat    text eol=crlf
+*.jar    binary

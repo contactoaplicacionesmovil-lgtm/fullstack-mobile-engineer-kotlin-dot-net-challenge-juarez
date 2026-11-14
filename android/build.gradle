@@ -1,0 +1,5 @@
+// Desde AGP 9 el soporte de Kotlin viene integrado: no hace falta aplicar
+// el plugin org.jetbrains.kotlin.android para compilar archivos .kt.
+plugins {
+    id 'com.android.application' version '9.5.1' apply false
+}

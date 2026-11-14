@@ -1,0 +1,23 @@
+# .NET
+bin/
+obj/
+.vs/
+*.user
+
+# Android / Gradle
+.gradle/
+.kotlin/
+android/build/
+android/app/build/
+android/local.properties
+android/captures/
+*.iml
+
+# IDE
+.idea/
+.vscode/
+
+# Sistema y secretos locales
+.DS_Store
+Thumbs.db
+.env
