@@ -16,12 +16,12 @@ Content-Type: application/json
 ###
 @token = {{login.response.body.token}}
 
-### Ordenes del tecnico 1
-GET {{baseUrl}}/api/workorders?technicianId=1
+### Ordenes del tecnico segun login
+GET {{baseUrl}}/api/workorders
 Authorization: Bearer {{token}}
 
-### Ordenes pendientes del tecnico 1
-GET {{baseUrl}}/api/workorders?technicianId=1&status=PENDING
+### Ordenes pendientes del tecnico segun login
+GET {{baseUrl}}/api/workorders?status=PENDING
 Authorization: Bearer {{token}}
 
 ### Cambiar el estado de la orden 4
