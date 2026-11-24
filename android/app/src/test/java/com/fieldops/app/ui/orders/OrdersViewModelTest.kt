@@ -1,5 +1,6 @@
 package com.fieldops.app.ui.orders
 
+import com.fieldops.app.data.remote.dto.WorkOrderDto
 import com.fieldops.app.data.repository.WorkOrdersRepository
 import com.fieldops.app.domain.model.WorkOrder
 import kotlinx.coroutines.Dispatchers
@@ -33,7 +34,7 @@ class OrdersViewModelTest {
     }
 
     @Test
-    fun `loadOrders emits Content state with orders and calculates pending count`() = runTest {
+    fun `loadOrders emite estado Content con las ordenes y calcula la cantidad de pendientes`() = runTest {
         val sampleOrders = listOf(
             createOrder(id = 1, code = "OT-0001", status = WorkOrder.STATUS_PENDING),
             createOrder(id = 2, code = "OT-0002", status = WorkOrder.STATUS_IN_PROGRESS),
@@ -53,7 +54,7 @@ class OrdersViewModelTest {
     }
 
     @Test
-    fun `loadOrders emits Empty state when repository returns no orders`() = runTest {
+    fun `loadOrders emite estado Empty cuando el repositorio no devuelve ordenes`() = runTest {
         val repository = FakeWorkOrdersRepository(ordersResult = Result.success(emptyList()))
 
         val viewModel = OrdersViewModel(repository)
@@ -65,9 +66,9 @@ class OrdersViewModelTest {
     }
 
     @Test
-    fun `loadOrders emits Error state when repository throws exception`() = runTest {
+    fun `loadOrders emite estado Error cuando el repositorio lanza una excepcion`() = runTest {
         val repository = FakeWorkOrdersRepository(
-            ordersResult = Result.failure(IOException("Network unavailable")),
+            ordersResult = Result.failure(IOException("Red no disponible")),
         )
 
         val viewModel = OrdersViewModel(repository)
@@ -79,7 +80,7 @@ class OrdersViewModelTest {
     }
 
     @Test
-    fun `onFilterSelected reloads only when filter changes and ignores duplicate filter on rotation`() = runTest {
+    fun `onFilterSelected solo recarga cuando cambia el filtro e ignora filtro duplicado al rotar`() = runTest {
         val pendingOrder = createOrder(id = 1, code = "OT-0001", status = WorkOrder.STATUS_PENDING)
         val repository = FakeWorkOrdersRepository(ordersResult = Result.success(listOf(pendingOrder)))
 
@@ -101,7 +102,7 @@ class OrdersViewModelTest {
     }
 
     @Test
-    fun `updateOrderStatus updates repository, emits confirmation message and reloads orders`() = runTest {
+    fun `updateOrderStatus actualiza el repositorio, emite mensaje de confirmacion y recarga las ordenes`() = runTest {
         val initialOrder = createOrder(id = 4, code = "OT-0004", status = WorkOrder.STATUS_PENDING)
         val repository = FakeWorkOrdersRepository(ordersResult = Result.success(listOf(initialOrder)))
 
@@ -120,8 +121,8 @@ class OrdersViewModelTest {
     }
 
     @Test
-    fun `WorkOrderDto toDomain maps fields and parses ISO scheduledAt accurately`() {
-        val dto = com.fieldops.app.data.remote.dto.WorkOrderDto(
+    fun `WorkOrderDto toDomain mapea los campos y parsea correctamente la fecha ISO scheduledAt`() {
+        val dto = WorkOrderDto(
             id = 4,
             code = "OT-0004",
             title = "Mantenimiento preventivo de UPS",

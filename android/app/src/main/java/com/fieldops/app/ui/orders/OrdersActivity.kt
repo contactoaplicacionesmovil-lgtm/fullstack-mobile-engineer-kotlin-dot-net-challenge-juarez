@@ -10,11 +10,10 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.core.content.edit
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.fieldops.app.LoginActivity
 import com.fieldops.app.R
-import com.fieldops.app.Session
+import com.fieldops.app.data.local.SessionManager
 import com.fieldops.app.ui.theme.FieldOpsTheme
 
 class OrdersActivity : AppCompatActivity() {
@@ -23,6 +22,7 @@ class OrdersActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        SessionManager.init(applicationContext)
         title = getString(R.string.orders_title)
 
         setContent {
@@ -38,7 +38,7 @@ class OrdersActivity : AppCompatActivity() {
 
                 OrdersScreen(
                     uiState = uiState,
-                    fullName = Session.fullName,
+                    fullName = SessionManager.getFullName(),
                     onFilterSelected = viewModel::onFilterSelected,
                     onOrderStatusChange = viewModel::updateOrderStatus,
                     onRetry = viewModel::loadOrders,
@@ -54,10 +54,7 @@ class OrdersActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == MENU_LOGOUT) {
-            getSharedPreferences("fieldops", MODE_PRIVATE).edit {
-                remove("token")
-            }
-            Session.token = null
+            SessionManager.clearSession()
             startActivity(Intent(this, LoginActivity::class.java))
             finish()
             return true
