@@ -22,7 +22,7 @@ END;
 GO
 
 CREATE OR ALTER PROCEDURE dbo.sp_WorkOrders_List
-    @TechnicianId INT,
+    @TechnicianId INT = NULL,
     @Status VARCHAR(20) = NULL
 AS
 BEGIN
@@ -41,10 +41,10 @@ BEGIN
         ScheduledAt,
         UpdatedAt
     FROM dbo.WorkOrders
-    WHERE
-        TechnicianId = @TechnicianId
-        AND (@Status IS NULL OR Status = @Status)
-    ORDER BY ScheduledAt;
+WHERE
+    (@TechnicianId IS NULL OR TechnicianId = @TechnicianId)
+    AND (@Status IS NULL OR Status = @Status)
+ORDER BY ScheduledAt;
 END;
 GO
 

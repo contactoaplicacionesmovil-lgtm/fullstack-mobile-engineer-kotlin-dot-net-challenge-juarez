@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace FieldOps.Api.Controllers
 {
-    [Authorize(Roles = "TECHNICIAN")]
+    [Authorize(Roles = "TECHNICIAN,SUPERVISOR")]
     [ApiController]
     [Route("api/workorders")]
     public class WorkOrdersController : ControllerBase
@@ -26,7 +26,19 @@ namespace FieldOps.Api.Controllers
             [FromQuery] string? status,
             CancellationToken cancellationToken)
         {
-            if (!int.TryParse(User.FindFirst("userId")?.Value, out var technicianId))
+            int? technicianId;
+
+            if (User.IsInRole("SUPERVISOR"))
+            {
+                technicianId = null;
+            }
+            else if (int.TryParse(
+                User.FindFirst("userId")?.Value,
+                out var authenticatedTechnicianId))
+            {
+                technicianId = authenticatedTechnicianId;
+            }
+            else
             {
                 return Forbid();
             }
@@ -39,7 +51,9 @@ namespace FieldOps.Api.Controllers
             return Ok(orders);
         }
 
+
         // PUT api/workorders/5/status
+        [Authorize(Roles = "TECHNICIAN")]
         [HttpPut("{id:int}/status")]
         public async Task<IActionResult> UpdateStatus(
             int id,

@@ -17,7 +17,7 @@ public sealed class WorkOrdersDataAccess
     }
 
     public async Task<IReadOnlyList<WorkOrderRecord>> GetOrdersAsync(
-        int technicianId,
+        int? technicianId,
         string? status,
         CancellationToken cancellationToken)
     {
@@ -30,9 +30,12 @@ public sealed class WorkOrdersDataAccess
             new SqlCommand("dbo.sp_WorkOrders_List", connection);
 
         command.CommandType = CommandType.StoredProcedure;
-        command.Parameters.Add(
-            "@TechnicianId",
-            SqlDbType.Int).Value = technicianId;
+
+        var technicianIdParameter =
+            command.Parameters.Add("@TechnicianId", SqlDbType.Int);
+
+        technicianIdParameter.Value =
+            (object?)technicianId ?? DBNull.Value;
 
         var statusParameter = command.Parameters.Add(
             "@Status",
